@@ -308,7 +308,8 @@ public class UploadEnhancedConversionsForLeads {
 
     // [START add_session_attributes]
     // Sets one of the sessionAttributesEncoded or sessionAttributesKeyValuePairs if either is
-    // provided.
+    // provided. The session attribute fields are only available to allowlisted users.
+    // To include these fields in conversion imports, upgrade to the Data Manager API.
     if (rawRecord.containsKey("sessionAttributesEncoded")) {
       clickConversionBuilder.setSessionAttributesEncoded(
           ByteString.copyFromUtf8(rawRecord.get("sessionAttributesEncoded")));
