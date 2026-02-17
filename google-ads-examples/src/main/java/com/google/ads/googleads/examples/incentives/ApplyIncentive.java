@@ -47,10 +47,11 @@ public class ApplyIncentive {
         names = ArgumentNames.INCENTIVE_ID,
         required = true,
         description = "The ID of the incentive to apply.")
-    private String incentiveId;
+    private Long incentiveId;
 
     @Parameter(
         names = ArgumentNames.COUNTRY_CODE,
+        required = true,
         description = "The country for the incentive to apply.")
     private String countryCode = "US";
   }
@@ -61,7 +62,7 @@ public class ApplyIncentive {
       // Either pass the required parameters for this example on the command line, or insert them
       // into the code here. See the parameter class definition above for more information.
       params.customerId = Long.parseLong("INSERT_CUSTOMER_ID_HERE");
-      params.incentiveId = "INSERT_INCENTIVE_ID_HERE";
+      params.incentiveId = Long.parseLong("INSERT_INCENTIVE_ID_HERE");
     }
 
     GoogleAdsClient googleAdsClient = null;
@@ -102,13 +103,14 @@ public class ApplyIncentive {
    * @param incentiveId the ID of the incentive to apply.
    * @param countryCode the country of the incentive.
    */
-  private void runExample(GoogleAdsClient googleAdsClient, long customerId, String incentiveId,
+  private void runExample(GoogleAdsClient googleAdsClient, long customerId, long incentiveId,
       String countryCode) {
     try (IncentiveServiceClient incentiveServiceClient = googleAdsClient.getLatestVersion()
         .createIncentiveServiceClient()) {
       ApplyIncentiveRequest request = ApplyIncentiveRequest.newBuilder()
           .setCustomerId(String.valueOf(customerId))
-          .setSelectedIncentiveId(Long.parseLong(incentiveId)).setCountryCode(countryCode).build();
+          .setSelectedIncentiveId(incentiveId)
+          .setCountryCode(countryCode).build();
       // Issues the request.
       ApplyIncentiveResponse response = incentiveServiceClient.applyIncentive(request);
 
